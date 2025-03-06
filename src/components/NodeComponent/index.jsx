@@ -1,44 +1,28 @@
 const NodeComponent = (props) => {
   function handleMouseDownOutput(ref, event, outputIndex) {
+    // Disable drag node
     event.stopPropagation();
 
     const centerX =
-      ref.getBoundingClientRect().left +
-      Math.abs(
-        ref.getBoundingClientRect().right - ref.getBoundingClientRect().left
-      ) /
-        2;
+        ref.getBoundingClientRect().left + Math.abs(ref.getBoundingClientRect().right - ref.getBoundingClientRect().left) / 2;
     const centerY =
-      ref.getBoundingClientRect().top +
-      Math.abs(
-        ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top
-      ) /
-        2;
+        ref.getBoundingClientRect().top + Math.abs(ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top) / 2;
 
     props.onMouseDownOutput(centerX, centerY, props.id, outputIndex);
-  }
+}
 
-  function handleMouseEnterInput(ref, inputIndex) {
+function handleMouseEnterInput(ref, inputIndex) {
     const centerX =
-      ref.getBoundingClientRect().left +
-      Math.abs(
-        ref.getBoundingClientRect().right - ref.getBoundingClientRect().left
-      ) /
-        2;
+        ref.getBoundingClientRect().left + Math.abs(ref.getBoundingClientRect().right - ref.getBoundingClientRect().left) / 2;
     const centerY =
-      ref.getBoundingClientRect().top +
-      Math.abs(
-        ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top
-      ) /
-        2;
+        ref.getBoundingClientRect().top + Math.abs(ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top) / 2;
 
     props.onMouseEnterInput(centerX, centerY, props.id, inputIndex);
-  }
+}
 
-  function handleMouseLeaveInput(inputIndex) {
+function handleMouseLeaveInput(inputIndex) {
     props.onMouseLeaveInput(props.id, inputIndex);
-  }
-  console.log(props);
+}
 
   return (
     <div
@@ -51,14 +35,14 @@ const NodeComponent = (props) => {
         props.onMouseDownNode(props.id, event);
       }}
     >
-      <div class="absolute top-0 left-[-24px] h-full flex flex-col items-center justify-center gap-3 w-[12px] pointer-events-none">
+      <div class="absolute top-0 left-[-9px] h-full flex flex-col items-center justify-center gap-3 w-[12px] pointer-events-none">
         <For each={[...Array(Number(props.numberInputs)).keys()]}>
           {(_, index) => {
             let inputRef;
             return (
               <div
                 ref={inputRef}
-                class="w-[12px] h-[12px] rounded-full bg-[#e38c29] cursor-crosshair pointer-events-auto"
+                class="w-[18px] h-[18px] rounded-full bg-[#e38c29] cursor-crosshair pointer-events-auto hover:bg-black"
                 onMouseEnter={() => handleMouseEnterInput(inputRef, index())}
                 onMouseLeave={() => handleMouseLeaveInput(index())}
               ></div>
@@ -68,7 +52,7 @@ const NodeComponent = (props) => {
       </div>
       {props.selected && (
         <button
-          class="absolute top-[-34px] left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-2 py-1 text-sm rounded-md shadow-md hover:bg-green-600 transition-all"
+          class="absolute top-[-10px] left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-2 py-1 text-sm rounded-md shadow-md hover:bg-green-600 transition-all"
           onClick={props.toggleSidebar}
         >
           <svg
@@ -122,14 +106,14 @@ const NodeComponent = (props) => {
         </div>
       )}
 
-      <div class="absolute top-0 right-[-24px] h-full flex flex-col items-center justify-center gap-3 w-[12px] pointer-events-none">
+      <div class="absolute top-0 right-[-9px] h-full flex flex-col items-center justify-center gap-5 w-[12px] pointer-events-none">
         <For each={[...Array(Number(props.numberOutputs)).keys()]}>
           {(_, index) => {
             let outputRef;
             return (
               <div
                 ref={outputRef}
-                class="w-[12px] h-[12px] rounded-full bg-[#e38c29] cursor-crosshair pointer-events-auto"
+                class="w-[18px] h-[18px] rounded-full bg-[#e38c29] hover:bg-red-500 cursor-crosshair pointer-events-auto"
                 onMouseDown={(event) =>
                   handleMouseDownOutput(outputRef, event, index())
                 }
@@ -140,7 +124,7 @@ const NodeComponent = (props) => {
       </div>
       {props.selected && (
         <button
-          class="absolute bottom-[-34px] left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-2 py-1 text-sm rounded-md shadow-md hover:bg-red-600 transition-all"
+          class="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-2 py-1 text-sm rounded-md shadow-md hover:bg-red-600 transition-all"
           onClick={props.onClickDeleteNode}
         >
           <svg
