@@ -1,6 +1,6 @@
+import styles from "./styles.module.css";
 const NodeComponent = (props) => {
   function handleMouseDownOutput(ref, event, outputIndex) {
-    // Disable drag node
     event.stopPropagation();
 
     const centerX =
@@ -42,12 +42,13 @@ const NodeComponent = (props) => {
 
   return (
     <div
-      class={`w-[120px] h-[120px] flex flex-col absolute cursor-grab bg-white border-2 ${
-        props.selected ? "border-orange-500" : "border-gray-400"
-      } rounded-md shadow-md select-none z-10 transition-all duration-200 hover:shadow-lg`}
-      style={{ transform: `translate(${props.x}px, ${props.y}px)` }}
+      class={props.selected ? styles.nodeSelected : styles.node}
+      style={{
+        transform: `translate(${props.x}px, ${props.y}px)`,
+      }}
       onMouseDown={(event) => {
         event.stopPropagation();
+
         props.onMouseDownNode(props.id, event);
       }}
     >

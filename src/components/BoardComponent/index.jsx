@@ -17,18 +17,6 @@ const BoardComponent = () => {
   const [scale, setScale] = createSignal(1);
   const [sidebarVisible, setSidebarVisible] = createSignal(false);
 
-  //make the sidebar visible only when click on + button
-  const toggleSidebar = () => {
-    setSidebarVisible(true);
-  };
-
-  const closeSidebar = () => {
-    setSidebarVisible(false);
-  };
-  const clickAddNodeHandler = (e, input, output, name) => {
-    e.stopPropagation();
-    handleOnClickAdd(input, output, name);
-  };
   onMount(() => {
     const boardElement = document.getElementById("board");
 
@@ -43,12 +31,23 @@ const BoardComponent = () => {
           boardElement.style.transform = `scale(${scale()})`;
           boardElement.style.marginTop = `${(scale() - 1) * 1}vh`;
           boardElement.style.marginLeft = `${(scale() - 1) * 1}vw`;
-        }
-        //change here for movement board
-        // { passive: false }
+        },
+        { passive: false }
       );
     }
   });
+  //make the sidebar visible only when click on + button
+  const toggleSidebar = () => {
+    setSidebarVisible(true);
+  };
+
+  const closeSidebar = () => {
+    setSidebarVisible(false);
+  };
+  const clickAddNodeHandler = (e, input, output, name) => {
+    e.stopPropagation();
+    handleOnClickAdd(input, output, name);
+  };
   //When Zoom in then scroll bar
   createEffect(() => {
     const boardWrapperElement = document.getElementById("boardWrapper");
@@ -151,7 +150,6 @@ const BoardComponent = () => {
   }
 
   function handleOnMouseMove(event) {
-    // User clicked somewhere
     if (clickedPosition().x >= 0 && clickedPosition().y >= 0) {
       // User clicked on node
       if (selectedNode() !== null) {
@@ -160,7 +158,6 @@ const BoardComponent = () => {
 
         const node = nodes().find((node) => node.id === selectedNode());
         if (node) {
-          // Update node position
           node.currPosition.set((_) => {
             return {
               x: (node.prevPosition.get().x + deltaX) / scale(),
@@ -168,7 +165,6 @@ const BoardComponent = () => {
             };
           });
 
-          // Update input edges positions
           for (let i = 0; i < node.inputEdgeIds.get().length; i++) {
             const edgeId = node.inputEdgeIds.get()[i];
             const edge = edges().find((edge) => edge.id === edgeId);
@@ -182,7 +178,6 @@ const BoardComponent = () => {
             }
           }
 
-          // Update output edges positions
           for (let i = 0; i < node.outputEdgeIds.get().length; i++) {
             const edgeId = node.outputEdgeIds.get()[i];
             const edge = edges().find((edge) => edge.id === edgeId);
@@ -196,9 +191,7 @@ const BoardComponent = () => {
             }
           }
         }
-      }
-      // User clicked on board, move board
-      else {
+      } else {
         const deltaX = event.x - clickedPosition().x;
         const deltaY = event.y - clickedPosition().y;
 
@@ -210,7 +203,6 @@ const BoardComponent = () => {
       }
     }
 
-    // User is setting new edge
     if (newEdge() !== null) {
       const boardWrapperElement = document.getElementById("boardWrapper");
       if (boardWrapperElement) {
@@ -223,18 +215,14 @@ const BoardComponent = () => {
   }
 
   function handleOnMouseDownNode(id, event) {
-    // Deselect edge
     setSelectedEdge(null);
 
-    // Select node
     setSelectedNode(id);
 
-    // Update first click position
     setClickedPosition({ x: event.x, y: event.y });
 
     const node = nodes().find((node) => node.id === selectedNode());
     if (node) {
-      // Update node position
       node.prevPosition.set((_) => {
         return {
           x: node.currPosition.get().x * scale(),
@@ -242,7 +230,6 @@ const BoardComponent = () => {
         };
       });
 
-      // Update input edges positions
       for (let i = 0; i < node.inputEdgeIds.get().length; i++) {
         const edgeId = node.inputEdgeIds.get()[i];
         const edge = edges().find((edge) => edge.id === edgeId);
@@ -256,7 +243,6 @@ const BoardComponent = () => {
         }
       }
 
-      // Update output edges positions
       for (let i = 0; i < node.outputEdgeIds.get().length; i++) {
         const edgeId = node.outputEdgeIds.get()[i];
         const edge = edges().find((edge) => edge.id === edgeId);
@@ -435,7 +421,7 @@ const BoardComponent = () => {
   return (
     <div
       id="boardWrapper"
-      className="fixed w-screen h-screen top-0 left-0 overflow-hidden"
+      class="fixed w-screen h-screen top-0 left-0 overflow-hidden"
     >
       <ButtonComponent
         setSidebarVisible={setSidebarVisible}
