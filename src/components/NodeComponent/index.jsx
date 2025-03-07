@@ -47,6 +47,8 @@ const NodeComponent = (props) => {
         transform: `translate(${props.x}px, ${props.y}px)`,
       }}
       onMouseDown={(event) => {
+        //prevent Click on board
+
         event.stopPropagation();
 
         props.onMouseDownNode(props.id, event);
