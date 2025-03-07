@@ -1,4 +1,4 @@
-import { createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import ButtonComponent from "../ButtonComponent";
 import NodeComponent from "../NodeComponent";
 import EdgeComponent from "../EdgeComponent";
@@ -47,6 +47,13 @@ const BoardComponent = () => {
         //change here for movement board
         // { passive: false }
       );
+    }
+  });
+  //When Zoom in then scroll bar
+  createEffect(() => {
+    const boardWrapperElement = document.getElementById("boardWrapper");
+    if (boardWrapperElement) {
+      boardWrapperElement.style.overflow = scale() > 1 ? "scroll" : "hidden";
     }
   });
 

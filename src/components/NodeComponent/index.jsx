@@ -4,25 +4,41 @@ const NodeComponent = (props) => {
     event.stopPropagation();
 
     const centerX =
-        ref.getBoundingClientRect().left + Math.abs(ref.getBoundingClientRect().right - ref.getBoundingClientRect().left) / 2;
+      ref.getBoundingClientRect().left +
+      Math.abs(
+        ref.getBoundingClientRect().right - ref.getBoundingClientRect().left
+      ) /
+        2;
     const centerY =
-        ref.getBoundingClientRect().top + Math.abs(ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top) / 2;
+      ref.getBoundingClientRect().top +
+      Math.abs(
+        ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top
+      ) /
+        2;
 
     props.onMouseDownOutput(centerX, centerY, props.id, outputIndex);
-}
+  }
 
-function handleMouseEnterInput(ref, inputIndex) {
+  function handleMouseEnterInput(ref, inputIndex) {
     const centerX =
-        ref.getBoundingClientRect().left + Math.abs(ref.getBoundingClientRect().right - ref.getBoundingClientRect().left) / 2;
+      ref.getBoundingClientRect().left +
+      Math.abs(
+        ref.getBoundingClientRect().right - ref.getBoundingClientRect().left
+      ) /
+        2;
     const centerY =
-        ref.getBoundingClientRect().top + Math.abs(ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top) / 2;
+      ref.getBoundingClientRect().top +
+      Math.abs(
+        ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top
+      ) /
+        2;
 
     props.onMouseEnterInput(centerX, centerY, props.id, inputIndex);
-}
+  }
 
-function handleMouseLeaveInput(inputIndex) {
+  function handleMouseLeaveInput(inputIndex) {
     props.onMouseLeaveInput(props.id, inputIndex);
-}
+  }
 
   return (
     <div
@@ -38,7 +54,7 @@ function handleMouseLeaveInput(inputIndex) {
       <div class="absolute top-0 left-[-9px] h-full flex flex-col items-center justify-center gap-3 w-[12px] pointer-events-none">
         <For each={[...Array(Number(props.numberInputs)).keys()]}>
           {(_, index) => {
-            let inputRef;
+            let inputRef = null;
             return (
               <div
                 ref={inputRef}
@@ -109,7 +125,7 @@ function handleMouseLeaveInput(inputIndex) {
       <div class="absolute top-0 right-[-9px] h-full flex flex-col items-center justify-center gap-5 w-[12px] pointer-events-none">
         <For each={[...Array(Number(props.numberOutputs)).keys()]}>
           {(_, index) => {
-            let outputRef;
+            let outputRef = null;
             return (
               <div
                 ref={outputRef}
