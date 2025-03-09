@@ -1,7 +1,6 @@
 const ButtonComponent = (props) => {
   return (
     <div>
-    
       <div class="fixed top-0 left-0 w-screen p-[24px_38px] flex items-center justify-end gap-6 z-[300] pointer-events-none box-border">
         <button
           class="transition-all duration-200 bg-indigo-600 p-3 rounded-full text-white text-2xl cursor-pointer pointer-events-auto shadow-[1px_1px_11px_-6px_rgba(0,0,0,0.75)] outline-none border-none flex justify-center items-center hover:bg-indigo-800 hover:shadow-[2px_2px_12px_-6px_rgba(0,0,0,0.75)] hover:scale-105 active:scale-95"
@@ -21,7 +20,6 @@ const ButtonComponent = (props) => {
         </button>
       </div>
 
-      
       <div
         class={`fixed top-0 right-0 w-64 h-full bg-gray-800 text-white z-[400] transition-transform duration-300 ${
           props.sidebarVisible()
@@ -29,9 +27,7 @@ const ButtonComponent = (props) => {
             : "transform translate-x-full"
         }`}
       >
-       
         <div class="p-6">
-         
           <button
             class="absolute top-4 right-4 text-white text-3xl"
             onClick={props.closeSidebar}
@@ -65,7 +61,15 @@ const ButtonComponent = (props) => {
             <li class="mb-2">
               <button
                 class="text-lg hover:text-gray-300"
-                onClick={(e) => props.clickAddNodeHandler(e, 1, 2, "aia")}
+                onClick={(e) =>
+                  props.clickAddNodeHandler(
+                    e,
+                    1,
+                    1,
+                    { model: 1, memory: 1, tool: 1 },
+                    "aia"
+                  )
+                }
               >
                 AI Agent
               </button>
@@ -73,7 +77,6 @@ const ButtonComponent = (props) => {
             <li class="mb-2">
               <button class="text-lg hover:text-gray-300">Deployment</button>
             </li>
-            
           </ul>
         </div>
       </div>

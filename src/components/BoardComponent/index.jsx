@@ -44,9 +44,9 @@ const BoardComponent = () => {
   const closeSidebar = () => {
     setSidebarVisible(false);
   };
-  const clickAddNodeHandler = (e, input, output, name) => {
+  const clickAddNodeHandler = (e, input, output, others, name) => {
     e.stopPropagation();
-    handleOnClickAdd(input, output, name);
+    handleOnClickAdd(input, output, others, name);
   };
   //When Zoom in then scroll bar
   createEffect(() => {
@@ -258,7 +258,7 @@ const BoardComponent = () => {
     }
   }
 
-  function handleOnClickAdd(numberInputs, numberOutputs, name) {
+  function handleOnClickAdd(numberInputs, numberOutputs, others, name) {
     const randomX = Math.random() * window.innerWidth;
     const randomY = Math.random() * window.innerHeight;
 
@@ -278,6 +278,7 @@ const BoardComponent = () => {
         inputEdgeIds: { get: inputsEdgesIds, set: setInputsEdgesIds },
         outputEdgeIds: { get: outputsEdgesIds, set: setOutputsEdgesIds },
         name: name,
+        others: others,
       },
     ]);
   }
@@ -460,6 +461,7 @@ const BoardComponent = () => {
               toggleSidebar={toggleSidebar}
               closeSidebar={closeSidebar}
               sidebarVisible={sidebarVisible}
+              others={node.others}
             />
           )}
         </For>

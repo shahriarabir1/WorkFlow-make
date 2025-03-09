@@ -1,6 +1,8 @@
 import { createSignal } from "solid-js";
 import styles from "./styles.module.css";
 const NodeComponent = (props) => {
+  console.log(props);
+
   const [show, setShow] = createSignal(false);
   let upperDivRef = null;
   function handleMouseDownOutput(ref, event, outputIndex) {
@@ -213,6 +215,145 @@ const NodeComponent = (props) => {
               Tools Agent
             </p>
           </div>
+          {props.others && (
+            <div class="flex ">
+              {/* model */}
+              {props.others.model && (
+                <div>
+                  <div
+                    class="absolute bottom-[-13px] left-1/5 transform -translate-x-1/2 cursor-pointer z-100 text-[#8c8ea6] hover:text-[#e75e69]"
+                    onClick={props.onClickDeleteNode}
+                  >
+                    <svg
+                      fill="currentColor"
+                      stroke-width="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      height="1.5em"
+                      width="1.5em"
+                      style="overflow: visible; color: currentcolor;"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="w-[2px] h-[60px] bg-[#c3c9d5] absolute bottom-[-73px] left-1/5 transform -translate-x-1/2 z-1"></div>
+                  <div class="flex gap-1 bg-[#2e2e2e] absolute bottom-[-35px] left-1/5 transform -translate-x-1/2 z-100 text-[#c3c9d5] text-[12px]">
+                    Chat Model <span class="text-red-500 font-bold">*</span>
+                  </div>
+                  <button
+                    class="absolute bottom-[-100px] left-[50px] cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
+                    onClick={props.toggleSidebar}
+                  >
+                    <svg
+                      fill="currentColor"
+                      stroke-width="0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                      height="2em"
+                      width="2em"
+                      style="overflow: visible; color: currentcolor;"
+                    >
+                      <path d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm200 248v-64h-64c-13.3 0-24-10.7-24-24s10.7-24 24-24h64v-64c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24h-64v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+                    </svg>
+                  </button>
+                </div>
+              )}
+
+              {/* memory and tool */}
+              {props.others.memory && (
+                <div>
+                  {/* memory */}
+                  <div>
+                    <div
+                      class="absolute bottom-[-13px] right-1/8 transform -translate-x-1/2 cursor-pointer z-100 text-[#8c8ea6] hover:text-[#e75e69] "
+                      onClick={props.onClickDeleteNode}
+                    >
+                      <svg
+                        fill="currentColor"
+                        stroke-width="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        height="1.5em"
+                        width="1.5em"
+                        style="overflow: visible; color: currentcolor;"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div class="w-[2px] h-[60px] bg-[#c3c9d5] absolute bottom-[-73px] right-16 transform -translate-x-1/2 z-1"></div>
+                    <div class="bg-[#2e2e2e] absolute bottom-[-35px] right-23 transform -translate-x-1/2 z-100 text-[#c3c9d5] text-[12px]">
+                      Memory
+                    </div>
+                    <button
+                      class="absolute bottom-[-100px] right-29 cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
+                      onClick={props.toggleSidebar}
+                    >
+                      <svg
+                        fill="currentColor"
+                        stroke-width="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                        height="2em"
+                        width="2em"
+                        style="overflow: visible; color: currentcolor;"
+                      >
+                        <path d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm200 248v-64h-64c-13.3 0-24-10.7-24-24s10.7-24 24-24h64v-64c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24h-64v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Tool */}
+                  <div>
+                    <div
+                      class="absolute bottom-[-13px] right-1/3 transform -translate-x-1/2 cursor-pointer z-100 text-[#8c8ea6] hover:text-[#e75e69] "
+                      onClick={props.onClickDeleteNode}
+                    >
+                      <svg
+                        fill="currentColor"
+                        stroke-width="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        height="1.5em"
+                        width="1.5em"
+                        style="overflow: visible; color: currentcolor;"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div class="w-[2px] h-[60px] bg-[#c3c9d5] absolute bottom-[-73px] right-33 transform -translate-x-1/2 z-1"></div>
+                    <div class="bg-[#2e2e2e] absolute bottom-[-35px] right-[45px] transform -translate-x-1/2 z-100 text-[#c3c9d5] text-[12px]">
+                      Tool
+                    </div>
+                    <button
+                      class="absolute bottom-[-100px] right-[48px] cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
+                      onClick={props.toggleSidebar}
+                    >
+                      <svg
+                        fill="currentColor"
+                        stroke-width="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                        height="2em"
+                        width="2em"
+                        style="overflow: visible; color: currentcolor;"
+                      >
+                        <path d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm200 248v-64h-64c-13.3 0-24-10.7-24-24s10.7-24 24-24h64v-64c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24h-64v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
