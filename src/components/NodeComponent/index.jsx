@@ -1,5 +1,8 @@
+import { createSignal } from "solid-js";
 import styles from "./styles.module.css";
 const NodeComponent = (props) => {
+  const [show, setShow] = createSignal(false);
+  let upperDivRef = null;
   function handleMouseDownOutput(ref, event, outputIndex) {
     event.stopPropagation();
 
@@ -39,6 +42,18 @@ const NodeComponent = (props) => {
   function handleMouseLeaveInput(inputIndex) {
     props.onMouseLeaveInput(props.id, inputIndex);
   }
+  function handleMouseEnterNode() {
+    setShow(true);
+  }
+
+  function handleMouseLeaveNode() {
+    setTimeout(() => {
+      // Only hide if the mouse isn't over the upper div
+      if (!upperDivRef || !upperDivRef.matches(":hover")) {
+        setShow(false);
+      }
+    }, 100);
+  }
 
   return (
     <div
@@ -53,7 +68,81 @@ const NodeComponent = (props) => {
 
         props.onMouseDownNode(props.id, event);
       }}
+      onMouseOver={handleMouseEnterNode}
+      onMouseLeave={handleMouseLeaveNode}
     >
+      {show() && (
+        <div
+          ref={upperDivRef}
+          class="flex items-center gap-5 absolute top-[-50px] right-0  h-8 bg-[#2e2e2e]"
+          onMouseEnter={() => setShow(true)} // Prevent hiding when mouse is over upper div
+          onMouseLeave={() => setShow(false)} // Hide when the mouse leaves the upper div
+        >
+          {/* Play Button */}
+          <div class="text-[#c3c9d5] hover:text-[#e75e69]">
+            <svg
+              fill="currentColor"
+              stroke-width="0"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              height="2em"
+              width="2em"
+              style="overflow: visible; color: currentcolor;"
+            >
+              <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"></path>
+            </svg>
+          </div>
+          {/* Run Button */}
+          <div class="text-[#c3c9d5]  hover:text-[#e75e69]">
+            <svg
+              fill="currentColor"
+              stroke-width="0"
+              xmlns="http://www.w3.org/2000/svg"
+              baseProfile="tiny"
+              version="1.2"
+              viewBox="0 0 24 24"
+              height="2em"
+              width="2em"
+              style="overflow: visible; color: currentcolor;"
+            >
+              <path d="M11.5 18.573a6.46 6.46 0 0 1-4.596-1.903C5.677 15.442 5 13.81 5 12.073s.677-3.369 1.904-4.597A.999.999 0 1 1 8.318 8.89C7.468 9.741 7 10.871 7 12.073s.468 2.333 1.318 3.183c.85.85 1.979 1.317 3.182 1.317s2.332-.468 3.182-1.317c.851-.85 1.318-1.98 1.318-3.183s-.468-2.333-1.318-3.183a.999.999 0 1 1 1.414-1.414C17.323 8.705 18 10.337 18 12.073s-.677 3.369-1.904 4.597a6.46 6.46 0 0 1-4.596 1.903zm0-7.573a1 1 0 0 1-1-1V5a1 1 0 1 1 2 0v5a1 1 0 0 1-1 1z"></path>
+            </svg>
+          </div>
+          {/* Delete Button */}
+          <div
+            class="text-[#c3c9d5]  hover:text-[#e75e69]"
+            onClick={props.onClickDeleteNode}
+          >
+            <svg
+              fill="currentColor"
+              stroke-width="0"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+              height="1em"
+              width="1em"
+              style="overflow: visible; color: currentcolor;"
+            >
+              <path d="M135.2 17.7 128 32H32C14.3 32 0 46.3 0 64s14.3 32 32 32h384c17.7 0 32-14.3 32-32s-14.3-32-32-32h-96l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32l21.2 339c1.6 25.3 22.6 45 47.9 45h245.8c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
+            </svg>
+          </div>
+
+          {/* Menu Button */}
+          <div class="text-[#c3c9d5]  hover:text-[#e75e69]">
+            <svg
+              fill="currentColor"
+              stroke-width="0"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              height="2em"
+              width="2em"
+              style="overflow: visible; color: currentcolor;"
+            >
+              <path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
+            </svg>
+          </div>
+        </div>
+      )}
+
       <div class="absolute top-0 left-[-9px] h-full flex flex-col items-center justify-center gap-3 w-[12px] pointer-events-none">
         <For each={[...Array(Number(props.numberInputs)).keys()]}>
           {(_, index) => {
@@ -61,7 +150,7 @@ const NodeComponent = (props) => {
             return (
               <div
                 ref={inputRef}
-                class="w-[18px] h-[18px] rounded-full bg-[#e38c29] cursor-crosshair pointer-events-auto hover:bg-black"
+                class="w-[10px] h-[25px]  bg-[#c3c9d5] cursor-crosshair pointer-events-auto hover:bg-[#e75e69]"
                 onMouseEnter={() => handleMouseEnterInput(inputRef, index())}
                 onMouseLeave={() => handleMouseLeaveInput(index())}
               ></div>
@@ -69,24 +158,6 @@ const NodeComponent = (props) => {
           }}
         </For>
       </div>
-      {props.selected && (
-        <button
-          class="absolute top-[-10px] left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-2 py-1 text-sm rounded-md shadow-md hover:bg-green-600 transition-all"
-          onClick={props.toggleSidebar}
-        >
-          <svg
-            fill="currentColor"
-            stroke-width="0"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1024 1024"
-            height="1em"
-            width="1em"
-            style="overflow: visible; color: currentcolor;"
-          >
-            <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm192 472c0 4.4-3.6 8-8 8H544v152c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V544H328c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h152V328c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v152h152c4.4 0 8 3.6 8 8v48z"></path>
-          </svg>
-        </button>
-      )}
 
       {props.name === "gmail" && (
         <div class="flex justify-center items-center w-full h-full">
@@ -110,55 +181,79 @@ const NodeComponent = (props) => {
         </div>
       )}
       {props.name === "aia" && (
-        <div class="flex justify-center items-center w-full h-full">
+        <div class="flex  items-center w-full h-full text-white gap-x-6 ml-10">
           <svg
-            fill="currentColor"
-            stroke-width="0"
+            class="svg-inline--fa fa-robot fa-w-20"
+            aria-hidden="true"
+            focusable="false"
+            data-prefix="fas"
+            data-icon="robot"
+            role="img"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 640 512"
-            height="5em"
-            width="5em"
-            style="overflow: visible; color: currentcolor;"
+            style="width: 50px; height: 50px; max-width: none;"
           >
-            <path d="M320 0c17.7 0 32 14.3 32 32v64h120c39.8 0 72 32.2 72 72v272c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72h120V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zM264 256a40 40 0 1 0-80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224h16v192H48c-26.5 0-48-21.5-48-48v-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48h-16V224h16z"></path>
+            <path
+              fill="currentColor"
+              d="M32,224H64V416H32A31.96166,31.96166,0,0,1,0,384V256A31.96166,31.96166,0,0,1,32,224Zm512-48V448a64.06328,64.06328,0,0,1-64,64H160a64.06328,64.06328,0,0,1-64-64V176a79.974,79.974,0,0,1,80-80H288V32a32,32,0,0,1,64,0V96H464A79.974,79.974,0,0,1,544,176ZM264,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,264,256Zm-8,128H192v32h64Zm96,0H288v32h64ZM456,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,456,256Zm-8,128H384v32h64ZM640,256V384a31.96166,31.96166,0,0,1-32,32H576V224h32A31.96166,31.96166,0,0,1,640,256Z"
+            ></path>
           </svg>
+
+          <div class="flex flex-col gap-1">
+            <p
+              class="text-[24px] font-sans font-semibold"
+              style="font-family: 'Open Sans', sans-serif;"
+            >
+              AI Agent
+            </p>
+            <p
+              class="text-[18px] font-sans text-[#a49e9c]"
+              style="font-family: 'Open Sans', sans-serif;"
+            >
+              Tools Agent
+            </p>
+          </div>
         </div>
       )}
 
-      <div class="absolute top-0 right-[-9px] h-full flex flex-col items-center justify-center gap-5 w-[12px] pointer-events-none">
+      <div class="absolute top-0 right-[-9px] h-full flex flex-col items-center justify-center gap-7 w-[12px]">
         <For each={[...Array(Number(props.numberOutputs)).keys()]}>
           {(_, index) => {
             let outputRef = null;
             return (
-              <div
-                ref={outputRef}
-                class="w-[18px] h-[18px] rounded-full bg-[#e38c29] hover:bg-red-500 cursor-crosshair pointer-events-auto"
-                onMouseDown={(event) =>
-                  handleMouseDownOutput(outputRef, event, index())
-                }
-              ></div>
+              <div class="relative flex ">
+                {/* Output Circle */}
+                <div
+                  ref={outputRef}
+                  class="w-[18px] h-[18px] rounded-full bg-[#c3c9d5] hover:bg-[#e75e69] cursor-crosshair pointer-events-auto z-100"
+                  onMouseDown={(event) =>
+                    handleMouseDownOutput(outputRef, event, index())
+                  }
+                ></div>
+
+                {/* Line extending from the center of the output */}
+                <div class="ml-[25px] w-[60px] h-[2px] bg-[#c3c9d5] absolute top-[50%] left-1/2 transform -translate-x-1/2 z-50"></div>
+                <button
+                  class="absolute top-[-25%] left-15 cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
+                  onClick={props.toggleSidebar}
+                >
+                  <svg
+                    fill="currentColor"
+                    stroke-width="0"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                    height="2em"
+                    width="2em"
+                    style="overflow: visible; color: currentcolor;"
+                  >
+                    <path d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm200 248v-64h-64c-13.3 0-24-10.7-24-24s10.7-24 24-24h64v-64c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24h-64v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+                  </svg>
+                </button>
+              </div>
             );
           }}
         </For>
       </div>
-      {props.selected && (
-        <button
-          class="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-2 py-1 text-sm rounded-md shadow-md hover:bg-red-600 transition-all"
-          onClick={props.onClickDeleteNode}
-        >
-          <svg
-            fill="currentColor"
-            stroke-width="0"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1024 1024"
-            height="1em"
-            width="1em"
-            style="overflow: visible; color: currentcolor;"
-          >
-            <path d="M864 256H736v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zm-200 0H360v-72h304v72z"></path>
-          </svg>
-        </button>
-      )}
     </div>
   );
 };

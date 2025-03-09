@@ -433,8 +433,8 @@ const BoardComponent = () => {
       <div
         class={
           grabbingBoard()
-            ? "relative w-screen h-screen bg-[radial-gradient(circle,black_1px,transparent_1px)] bg-gray-700 bg-[size:30px_30px] cursor-grabbing"
-            : "relative w-screen h-screen bg-[radial-gradient(circle,black_1px,transparent_1px)] bg-gray-700 bg-[size:30px_30px] cursor-grab"
+            ? "relative w-screen h-screen bg-[radial-gradient(circle,#6b6b6b_1.3px,transparent_0px)] bg-[#2e2e2e] bg-[size:30px_30px] cursor-grabbing"
+            : "relative w-screen h-screen bg-[radial-gradient(circle,#6b6b6b_1.3px,transparent_0px)] bg-[#2e2e2e] bg-[size:30px_30px] cursor-grab"
         }
         onMouseDown={handleOnMouseDownBoard}
         onMouseUp={handleOnMouseUpBoard}
