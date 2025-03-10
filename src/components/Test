@@ -1,0 +1,29 @@
+<ul>
+            <li class="mb-2">
+              <button
+                class="text-lg hover:text-gray-300"
+                onClick={(e) => props.clickAddNodeHandler(e, 0, 1, "gmail")}
+              >
+                Gmail
+              </button>
+            </li>
+            <li class="mb-2">
+              <button
+                class="text-lg hover:text-gray-300"
+                onClick={(e) =>
+                  props.clickAddNodeHandler(
+                    e,
+                    1,
+                    1,
+                    { model: 1, memory: 1, tool: 1 },
+                    "aia"
+                  )
+                }
+              >
+                AI Agent
+              </button>
+            </li>
+            <li class="mb-2">
+              <button class="text-lg hover:text-gray-300">Deployment</button>
+            </li>
+          </ul>

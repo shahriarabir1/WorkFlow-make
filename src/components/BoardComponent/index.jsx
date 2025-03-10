@@ -2,6 +2,7 @@ import { createEffect, createSignal, onMount } from "solid-js";
 import ButtonComponent from "../ButtonComponent";
 import NodeComponent from "../NodeComponent";
 import EdgeComponent from "../EdgeComponent";
+import FullscreenComponent from "../Common/Screen/FullScreen";
 
 const BoardComponent = () => {
   const [grabbingBoard, setGrabbingBoard] = createSignal(false);
@@ -16,6 +17,7 @@ const BoardComponent = () => {
   const [edges, setEdges] = createSignal([]);
   const [scale, setScale] = createSignal(1);
   const [sidebarVisible, setSidebarVisible] = createSignal(false);
+  const [isOpen, setIsOpen] = createSignal(false);
 
   onMount(() => {
     const boardElement = document.getElementById("board");
@@ -427,9 +429,10 @@ const BoardComponent = () => {
       <ButtonComponent
         setSidebarVisible={setSidebarVisible}
         toggleSidebar={toggleSidebar}
-        closeSidebar={closeSidebar}
         clickAddNodeHandler={clickAddNodeHandler}
         sidebarVisible={sidebarVisible}
+        setIsOpen={setIsOpen}
+        closeSidebar={closeSidebar}
       />
       <div
         class={
@@ -441,6 +444,7 @@ const BoardComponent = () => {
         onMouseUp={handleOnMouseUpBoard}
         onMouseMove={handleOnMouseMove}
         id="board"
+        onClick={closeSidebar}
       >
         <For each={nodes()}>
           {(node) => (
@@ -459,7 +463,6 @@ const BoardComponent = () => {
               name={node.name}
               setSidebarVisible={setSidebarVisible}
               toggleSidebar={toggleSidebar}
-              closeSidebar={closeSidebar}
               sidebarVisible={sidebarVisible}
               others={node.others}
             />
@@ -496,6 +499,7 @@ const BoardComponent = () => {
           )}
         </For>
       </div>
+      {isOpen() ? <FullscreenComponent setIsOpen={setIsOpen} /> : null}
     </div>
   );
 };

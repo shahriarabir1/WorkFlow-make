@@ -1,11 +1,33 @@
 import { createSignal } from "solid-js";
 import Sidebar from "../Sidebar";
+import FullscreenComponent from "../Common/Screen/FullScreen";
 
 const ButtonComponent = (props) => {
   const [isHovered, setIsHovered] = createSignal(false);
   const [search, setSearch] = createSignal("");
-  const [isFocused, setIsFocused] = createSignal(false);
 
+  const nodes = [
+    {
+      title: "Gmail",
+      description: "Email node integration",
+      data: [0, 1, {}, "gmail"],
+    },
+    {
+      title: "AI Agent",
+      description: "Smart AI processing",
+      data: [1, 1, { model: 1, memory: 1, tool: 1 }, "aia"],
+    },
+    {
+      title: "Deployment",
+      description: "Deploy your workflow",
+      data: [1, 1, { model: 1, memory: 1, tool: 1 }, "aia"],
+    },
+  ];
+
+  const filteredNodes = () =>
+    nodes.filter((item) =>
+      item.title.toLowerCase().includes(search().toLowerCase())
+    );
   return (
     <div>
       <div
@@ -80,8 +102,6 @@ const ButtonComponent = (props) => {
               class="w-full p-2 pl-10 rounded text-white placeholder-gray-400 border border-gray-500 focus:border-blue-500 outline-none transition-colors"
               placeholder="Search nodes..."
               onInput={(e) => setSearch(e.target.value)}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
             />
             <svg
               class="absolute left-9 top-1/2 transform -translate-y-1/2 text-gray-300"
@@ -96,16 +116,22 @@ const ButtonComponent = (props) => {
           </div>
           {/* Node List */}
           <ul class="flex-1 overflow-y-auto">
-            {[
-              { title: "Gmail", description: "Email node integration" },
-              { title: "AI Agent", description: "Smart AI processing" },
-              { title: "Deployment", description: "Deploy your workflow" },
-            ].map((item, index) => (
-              <li class="mb-2 flex items-center justify-between p-3  rounded-lg relative group p-6">
-                <div
-                  class="flex items-center gap-5"
-                  onClick={() => props.clickAddNodeHandler()}
-                >
+            {filteredNodes().map((item, index) => (
+              <li
+                class="mb-2 flex items-center justify-between p-3  rounded-lg relative group p-6 cursor-pointer"
+                onClick={(e) => {
+                  props.clickAddNodeHandler(
+                    e,
+                    item.data[0],
+                    item.data[1],
+                    item.data[2],
+                    item.data[3]
+                  );
+                  props.setIsOpen(true);
+                  props.closeSidebar();
+                }}
+              >
+                <div class="flex items-center gap-5">
                   {item?.title == "Gmail" && (
                     <svg
                       fill="currentColor"
