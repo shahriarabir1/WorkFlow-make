@@ -18,7 +18,7 @@ const BoardComponent = () => {
   const [scale, setScale] = createSignal(1);
   const [sidebarVisible, setSidebarVisible] = createSignal(false);
   const [isOpen, setIsOpen] = createSignal(false);
-
+  
   onMount(() => {
     const boardElement = document.getElementById("board");
 
@@ -46,6 +46,7 @@ const BoardComponent = () => {
   const closeSidebar = () => {
     setSidebarVisible(false);
   };
+  const toggleSpecial = () => {};
   const clickAddNodeHandler = (e, input, output, others, name) => {
     e.stopPropagation();
     handleOnClickAdd(input, output, others, name);

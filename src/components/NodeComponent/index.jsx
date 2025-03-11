@@ -1,8 +1,6 @@
 import { createSignal } from "solid-js";
 import styles from "./styles.module.css";
 const NodeComponent = (props) => {
-  console.log(props);
-
   const [show, setShow] = createSignal(false);
   let upperDivRef = null;
   function handleMouseDownOutput(ref, event, outputIndex) {
@@ -245,7 +243,10 @@ const NodeComponent = (props) => {
                   </div>
                   <button
                     class="absolute bottom-[-100px] left-[50px] cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
-                    onClick={props.toggleSidebar}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      props.toggleSidebar();
+                    }}
                   >
                     <svg
                       fill="currentColor"
@@ -292,7 +293,10 @@ const NodeComponent = (props) => {
                     </div>
                     <button
                       class="absolute bottom-[-100px] right-29 cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
-                      onClick={props.toggleSidebar}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        props.toggleSidebar();
+                      }}
                     >
                       <svg
                         fill="currentColor"
@@ -335,7 +339,10 @@ const NodeComponent = (props) => {
                     </div>
                     <button
                       class="absolute bottom-[-100px] right-[48px] cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
-                      onClick={props.toggleSidebar}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        props.toggleSidebar();
+                      }}
                     >
                       <svg
                         fill="currentColor"
@@ -376,7 +383,10 @@ const NodeComponent = (props) => {
                 <div class="ml-[25px] w-[60px] h-[2px] bg-[#c3c9d5] absolute top-[50%] left-1/2 transform -translate-x-1/2 z-50"></div>
                 <button
                   class="absolute top-[-25%] left-15 cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
-                  onClick={props.toggleSidebar}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    props.toggleSidebar();
+                  }}
                 >
                   <svg
                     fill="currentColor"
