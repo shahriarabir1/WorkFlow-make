@@ -35,19 +35,25 @@ const BoardComponent = () => {
     if (!boardElement) return;
 
     const handleWheel = (event) => {
-      if (ctrlPressed()) {
+      if (ctrlPressed() || spacePressed()) {
         event.preventDefault(); // Prevent default browser zoom
-        setScale((prev) =>
-          Math.min(Math.max(1, prev + event.deltaY * -0.005), 2)
-        );
-        boardElement.style.transform = `scale(${scale()})`;
-      } else if (spacePressed()) {
-        event.preventDefault(); // Prevent default browser zoom
-        setScale((prev) =>
-          Math.min(Math.max(1, prev + event.deltaY * -0.005), 2)
-        );
-        boardElement.style.transform = `scale(${scale()})`;
+        // setScale((prev) =>
+        //   Math.min(Math.max(1, prev + event.deltaY * -0.005), 2)
+        // );
+        // boardElement.style.transform = `scale(${scale()})`;
+        if (event.deltaY < 0) {
+          zoomIn(); // Scroll up → Zoom in
+        } else {
+          zoomOut(); // Scroll down → Zoom out
+        }
       }
+      // else if (spacePressed()) {
+      //   event.preventDefault(); // Prevent default browser zoom
+      //   setScale((prev) =>
+      //     Math.min(Math.max(1, prev + event.deltaY * -0.005), 2)
+      //   );
+      //   boardElement.style.transform = `scale(${scale()})`;
+      // }
     };
 
     const handleKeyDown = (event) => {
@@ -98,6 +104,7 @@ const BoardComponent = () => {
     if (boardWrapperElement) {
       boardWrapperElement.style.overflow = scale() > 1 ? "scroll" : "hidden";
     }
+    console.log(zoomLevel());
   });
 
   function handleOnMouseDownBoard(event) {
@@ -470,7 +477,7 @@ const BoardComponent = () => {
     <div
       ref={containerRef}
       id="boardWrapper"
-      class="fixed w-screen h-screen top-0 left-0 overflow-hidden"
+      class="fixed w-screen h-screen top-0 left-0 overflow-hidden bg-[radial-gradient(circle,#6b6b6b_1.3px,transparent_0px)] bg-[#2e2e2e] bg-[size:30px_30px]"
     >
       <ButtonComponent
         setSidebarVisible={setSidebarVisible}
