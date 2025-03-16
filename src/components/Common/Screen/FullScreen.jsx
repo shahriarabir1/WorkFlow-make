@@ -1,6 +1,7 @@
 import { createSignal } from "solid-js";
 
 const FullscreenComponent = (props) => {
+  const [selected, setSelected] = createSignal("parameters"); // Default selected tab
   const [position, setPosition] = createSignal(0);
   let dragStartX = 0;
 
@@ -22,7 +23,7 @@ const FullscreenComponent = (props) => {
 
   return (
     <div>
-      <div class="fixed top-0 left-0 w-screen h-screen  bg-opacity-80 z-500 flex flex-col">
+      <div class="fixed top-0 left-0 w-screen h-screen bg-opacity-[20%] bg-[#454550] z-500 flex flex-col">
         {/* Back to Canvas */}
         <div
           class="p-4 flex items-center gap-2 cursor-pointer text-white font-bold"
@@ -43,10 +44,10 @@ const FullscreenComponent = (props) => {
         </div>
 
         {/* Draggable Component */}
-        <div class="flex bg-[#333333] w-[96%] mx-auto h-[96%] my-auto rounded-xl">
+        <div class="flex bg-[#333333] w-[96%] mx-auto h-[96%] my-auto rounded-xl mb-5">
           <div class="w-1/4 text-white">Input</div>
           <div
-            class="absolute left-1/2 transform -translate-x-1/2 top-1/4 w-80 shadow-lg rounded-lg"
+            class="absolute mt-[-100px] left-1/2 transform -translate-x-1/2 top-1/4 w-80  rounded-lg "
             style={{ left: `${50 + position()}%` }}
             draggable
             onDragStart={handleDragStart}
@@ -58,36 +59,105 @@ const FullscreenComponent = (props) => {
               <div class="flex items-center gap-2">
                 🤖 <span>AI Agent</span>
               </div>
-              <button class="bg-[#fe6f5b] px-4 py-2 rounded flex items-center gap-2">
+              <button class="bg-[#fe6f5b] p-4 rounded flex items-center gap-2">
                 🔍 Test Step
               </button>
             </div>
-            {/* Navigation */}
-            <div class="bg-[#414243] text-white p-2 flex justify-between border-b border-gray-600">
+
+            {/* Navigation Tabs */}
+            <div class="bg-[#414243] text-white px-4 pt-4 flex justify-between border-b border-gray-600">
               <div class="flex gap-4">
-                <span class="cursor-pointer">Parameters</span>
-                <span class="cursor-pointer">Settings</span>
+                <span
+                  class={`cursor-pointer ${
+                    selected() === "parameters"
+                      ? "text-[#f76e5c] underline"
+                      : "hover:text-[#f76e5c]"
+                  }`}
+                  onClick={() => setSelected("parameters")}
+                >
+                  Parameters
+                </span>
+                <span
+                  class={`cursor-pointer ${
+                    selected() === "settings"
+                      ? "text-[#f76e5c] underline"
+                      : "hover:text-[#f76e5c]"
+                  }`}
+                  onClick={() => setSelected("settings")}
+                >
+                  Settings
+                </span>
               </div>
-              <span class="cursor-pointer">Docs</span>
+              <span class="cursor-pointer hover:text-[#f76e5c]">Docs</span>
             </div>
-            {/* Dropdown Menus */}
+
+            {/* Dynamic Dropdown Menus */}
             <div class="bg-[#414243] text-white p-4">
-              <div class="mb-4">
-                <label class="block">Dropdown 1</label>
-                <select class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded">
-                  <option>Option 1</option>
-                  <option>Option 2</option>
-                </select>
+              {selected() === "parameters" ? (
+                <>
+                  <div class="mb-4">
+                    <label class="block">Dropdown 1</label>
+                    <select class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded">
+                      <option>Option 1</option>
+                      <option>Option 2</option>
+                    </select>
+                  </div>
+                  <div class="mb-4">
+                    <label class="block">Dropdown 2</label>
+                    <select class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded">
+                      <option>Option 1</option>
+                      <option>Option 2</option>
+                    </select>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div class="mb-4">
+                    <label class="block">Setting 1</label>
+                    <select class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded">
+                      <option>Option A</option>
+                      <option>Option B</option>
+                    </select>
+                  </div>
+                  <div class="mb-4">
+                    <label class="block">Setting 2</label>
+                    <select class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded">
+                      <option>Option A</option>
+                      <option>Option B</option>
+                    </select>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Bottom "+" Buttons */}
+            <div class="flex justify-between items-center gap-4 pb-4">
+              {/* Model */}
+              <div class="flex flex-col items-center">
+                <span class="text-white text-sm mb-1">Model</span>
+                <button class="w-8 h-8 flex items-center justify-center border-gray-600 text-white rounded-md hover:bg-[#f76e5c]">
+                  ➕
+                </button>
               </div>
-              <div class="mb-4">
-                <label class="block">Dropdown 2</label>
-                <select class="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded">
-                  <option>Option 1</option>
-                  <option>Option 2</option>
-                </select>
+
+              {/* Memory */}
+              <div class="flex flex-col items-center">
+                <span class="text-white text-sm mb-1">Memory</span>
+                <button class="w-8 h-8 flex items-center justify-center border-gray-600 text-white rounded-md hover:bg-[#f76e5c]">
+                  ➕
+                </button>
+              </div>
+
+              {/* Tool */}
+              <div class="flex flex-col items-center">
+                <span class="text-white text-sm mb-1">Tool</span>
+                <button class="w-8 h-8 flex items-center justify-center text-white border-gray-600 rounded-md hover:bg-[#f76e5c]">
+                  ➕
+                </button>
               </div>
             </div>
           </div>
+
           <div class="mx-auto text-white">Output</div>
         </div>
       </div>

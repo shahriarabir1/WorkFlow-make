@@ -1,6 +1,8 @@
 import { createSignal } from "solid-js";
 import styles from "./styles.module.css";
 const NodeComponent = (props) => {
+  console.log(props.edge);
+
   const [show, setShow] = createSignal(false);
   let upperDivRef = null;
   function handleMouseDownOutput(ref, event, outputIndex) {
@@ -380,26 +382,30 @@ const NodeComponent = (props) => {
                 ></div>
 
                 {/* Line extending from the center of the output */}
-                <div class="ml-[25px] w-[60px] h-[2px] bg-[#c3c9d5] absolute top-[50%] left-1/2 transform -translate-x-1/2 z-50"></div>
-                <button
-                  class="absolute top-[-25%] left-15 cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    props.toggleSidebar();
-                  }}
-                >
-                  <svg
-                    fill="currentColor"
-                    stroke-width="0"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 448 512"
-                    height="2em"
-                    width="2em"
-                    style="overflow: visible; color: currentcolor;"
-                  >
-                    <path d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm200 248v-64h-64c-13.3 0-24-10.7-24-24s10.7-24 24-24h64v-64c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24h-64v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
-                  </svg>
-                </button>
+                {props.edge < 1 || props.edges.length < 1 ? (
+                  <div>
+                    <div class="ml-[25px] w-[60px] h-[2px] bg-[#c3c9d5] absolute top-[50%] left-1/2 transform -translate-x-1/2 z-50"></div>
+                    <button
+                      class="absolute top-[-25%] left-15 cursor-pointer z-100 text-[#c3c9d5] hover:text-[#e75e69] rounded-md"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        props.toggleSidebar();
+                      }}
+                    >
+                      <svg
+                        fill="currentColor"
+                        stroke-width="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                        height="2em"
+                        width="2em"
+                        style="overflow: visible; color: currentcolor;"
+                      >
+                        <path d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm200 248v-64h-64c-13.3 0-24-10.7-24-24s10.7-24 24-24h64v-64c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24h-64v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                ) : null}
               </div>
             );
           }}
