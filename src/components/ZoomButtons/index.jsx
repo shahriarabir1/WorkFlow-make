@@ -76,7 +76,7 @@ const ZoomButtons = (props) => {
       </button>
 
       {/* Reset Zoom Button (Visible Only When Zoomed In) */}
-      <Show when={props.zoomLevel >= 0.8}>
+      <Show when={props.zoomLevel > 1 || props.zoomLevel < 1}>
         <button
           class="px-3 py-2 border-1 border-white rounded text-white hover:text-red-400 hover:border-red-400"
           onClick={props.resetZoom}

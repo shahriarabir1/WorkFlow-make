@@ -13,6 +13,37 @@
   width: 340px;
   height: 140px;
 }
+.nodeGmail {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+  background-color: rgb(64, 65, 66);
+  border: 3px solid white; /* Changed border color to white */
+  border-radius: 50px 10px 10px 50px; /* Rounded only the left side */
+  box-shadow: 1px 1px 11px -6px rgba(0, 0, 0, 0.75);
+  user-select: none;
+  z-index: 10;
+  transition: border ease 0.2s, box-shadow ease 0.2s;
+  width: 170px;
+  height: 140px;
+}
+.nodeg {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+  background-color: rgb(64, 65, 66);
+  border: 3px solid white; /* Changed border color to white */
+  border-radius: 50px 10px 10px 50px; /* Rounded only the left side */
+  box-shadow: 1px 1px 11px -6px rgba(0, 0, 0, 0.75);
+  outline: 8px solid #6d6b68c5;
+  user-select: none;
+  z-index: 10;
+  transition: border ease 0.2s, box-shadow ease 0.2s;
+  width: 170px;
+  height: 140px;
+}
 
 .nodeSelected {
   display: flex;
