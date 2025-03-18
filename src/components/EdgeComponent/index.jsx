@@ -97,7 +97,13 @@ const EdgeComponent = (props) => {
           </g>
 
           {/* Plus Button */}
-          <g transform="translate(36, 0)" onMouseDown={handleOnClickAdd}>
+          <g
+            transform="translate(36, 0)"
+            onClick={(e) => {
+              e.stopPropagation();
+              props.toggleSidebar();
+            }}
+          >
             <foreignObject
               width="32"
               height="32"

@@ -537,6 +537,7 @@ const BoardComponent = () => {
             }}
             onMouseDownEdge={() => {}}
             onClickDelete={() => {}}
+            toggleSidebar={toggleSidebar}
           />
         )}
         <For each={edges()}>
@@ -552,6 +553,7 @@ const BoardComponent = () => {
               }}
               onMouseDownEdge={() => handleOnMouseDownEdge(edge.id)}
               onClickDelete={() => handleOnDeleteEdge(edge.id)}
+              toggleSidebar={toggleSidebar}
             />
           )}
         </For>
